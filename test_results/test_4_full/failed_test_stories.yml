@@ -1,0 +1,115 @@
+version: "3.1"
+stories:
+- story: check balance failed (./tests/test_stories.yml)
+  steps:
+  - intent: goodbye  # predicted: check_balance: баланс скажи мені
+  - action: utter_check_balance  # predicted: action_convert_name_utter_bye
+  - action: action_print_last_turn_info
+- story: thanks failed (./tests/test_stories.yml)
+  steps:
+  - intent: goodbye  # predicted: thanks: дуже вдячна вам!
+  - action: utter_thanks  # predicted: action_convert_name_utter_bye
+  - action: action_print_last_turn_info
+- story: abort failed (./tests/test_stories.yml)
+  steps:
+  - intent: other  # predicted: abort: Ніт
+  - action: utter_abort  # predicted: utter_other
+  - action: action_print_last_turn_info
+- story: card not working (./tests/test_stories.yml)
+  steps:
+  - intent: stop_service  # predicted: card_not_working: карта не робить
+  - action: action_convert_name_utter_card_not_working  # predicted: utter_switch_to_operator
+  - action: utter_code_switch_to_operator
+  - action: action_print_last_turn_info
+- story: balance gold failed (./tests/test_stories.yml)
+  steps:
+  - intent: bad_words  # predicted: check_balance_gold: скажіть будь ласка, який який баланс по моїй картці [голд]{"entity": "card_type", "value": "gold"}?
+    entities:
+    - card_type: gold
+  - action: action_balance_gold  # predicted: utter_bad_words
+  - action: action_print_last_turn_info
+- story: balance standard failed (./tests/test_stories.yml)
+  steps:
+  - intent: bad_words  # predicted: check_balance_standard: а вкажіть швидко будь ласка, який баланс на моїй картці [стандарт]{"entity": "card_type", "value": "standard"}?
+    entities:
+    - card_type: standard
+  - action: action_balance_standard  # predicted: utter_bad_words
+  - action: action_print_last_turn_info
+- story: happy path 1 (./venv/lib/python3.10/site-packages/rasa/cli/initial_project/tests/test_stories.yml)
+  steps:
+  - intent: greet
+  - action: utter_greet  # predicted: action_convert_name_hello
+  - intent: mood_great  # predicted: nlu_fallback: amazing
+  - action: utter_happy  # predicted: action_default_fallback
+  - action: action_listen  # predicted: action_print_last_turn_info
+- story: happy path 2 (./venv/lib/python3.10/site-packages/rasa/cli/initial_project/tests/test_stories.yml)
+  steps:
+  - intent: greet
+  - action: utter_greet  # predicted: action_convert_name_hello
+  - intent: mood_great  # predicted: nlu_fallback: amazing
+  - action: utter_happy  # predicted: action_default_fallback
+  - action: action_listen  # predicted: action_print_last_turn_info
+  - intent: goodbye  # predicted: nlu_fallback: bye-bye!
+  - action: utter_goodbye  # predicted: action_convert_name_utter_bye
+- story: sad path 1 (./venv/lib/python3.10/site-packages/rasa/cli/initial_project/tests/test_stories.yml)
+  steps:
+  - intent: greet
+  - action: utter_greet  # predicted: action_convert_name_hello
+  - intent: mood_unhappy  # predicted: greet: not good
+  - action: utter_cheer_up  # predicted: action_default_fallback
+  - action: utter_did_that_help  # predicted: action_print_last_turn_info
+  - intent: affirm  # predicted: nlu_fallback: yes
+  - action: utter_happy  # predicted: action_default_fallback
+  - action: action_listen  # predicted: action_print_last_turn_info
+- story: sad path 2 (./venv/lib/python3.10/site-packages/rasa/cli/initial_project/tests/test_stories.yml)
+  steps:
+  - intent: greet
+  - action: utter_greet  # predicted: action_convert_name_hello
+  - intent: mood_unhappy  # predicted: greet: not good
+  - action: utter_cheer_up  # predicted: action_default_fallback
+  - action: utter_did_that_help  # predicted: action_print_last_turn_info
+  - intent: deny  # predicted: greet: not really
+  - action: utter_goodbye  # predicted: action_default_fallback
+  - action: action_listen  # predicted: action_print_last_turn_info
+- story: sad path 3 (./venv/lib/python3.10/site-packages/rasa/cli/initial_project/tests/test_stories.yml)
+  steps:
+  - intent: greet
+  - action: utter_greet  # predicted: action_convert_name_hello
+  - intent: mood_unhappy  # predicted: nlu_fallback: very terrible
+  - action: utter_cheer_up  # predicted: action_default_fallback
+  - action: utter_did_that_help  # predicted: action_print_last_turn_info
+  - intent: deny  # predicted: greet: no
+  - action: utter_goodbye  # predicted: action_default_fallback
+  - action: action_listen  # predicted: action_print_last_turn_info
+- story: say goodbye (./venv/lib/python3.10/site-packages/rasa/cli/initial_project/tests/test_stories.yml)
+  steps:
+  - intent: goodbye  # predicted: nlu_fallback: bye-bye!
+  - action: utter_goodbye  # predicted: action_convert_name_utter_bye
+- story: bot challenge (./venv/lib/python3.10/site-packages/rasa/cli/initial_project/tests/test_stories.yml)
+  steps:
+  - intent: bot_challenge  # predicted: nlu_fallback: are you a bot?
+  - action: utter_iamabot  # predicted: action_default_fallback
+- story: happy path 1 failed intent (./tests/test_stories.yml)
+  steps:
+  - intent: check_balance_standard  # predicted: greet: привет
+  - action: action_convert_name_hello  # predicted: action_balance_standard
+  - action: action_print_last_turn_info
+- story: random path 1 failed intent 1 (./tests/test_stories.yml)
+  steps:
+  - intent: competence  # predicted: weather: яка погода у [Києві](city) ти мені скажи?
+    entities:
+    - city: Києві
+  - action: action_weather  # predicted: utter_competence
+  - action: action_print_last_turn_info
+- story: random path 1 failed intent 2 (./tests/test_stories.yml)
+  steps:
+  - intent: goodbye  # predicted: weather: яка погода у [Києві](city) ти мені скажи?
+    entities:
+    - city: Києві
+  - action: action_weather  # predicted: action_convert_name_utter_bye
+  - action: action_print_last_turn_info
+- story: help from assistant failed (./tests/test_stories.yml)
+  steps:
+  - intent: goodbye  # predicted: competence: як помогти ти мені можеш?
+  - action: utter_competence  # predicted: action_convert_name_utter_bye
+  - action: action_print_last_turn_info

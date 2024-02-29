@@ -1,0 +1,51 @@
+version: "3.1"
+stories:
+- story: bye 1 (/root/rasa_shitdev/tests/test_stories.yml)
+  steps:
+  - intent: goodbye  # predicted: confirm: пока давай
+  - action: action_convert_name_utter_bye
+  - action: utter_code_end_call
+  - action: action_print_last_turn_info
+- story: Other and switch to operator (/root/rasa_shitdev/tests/test_stories.yml)
+  steps:
+  - intent: other  # predicted: card_not_working: як моя карта пововнюється?
+  - action: utter_other
+  - action: action_print_last_turn_info
+  - intent: other  # predicted: nlu_fallback: як поповнювати мою карту зараз?
+  - action: utter_switch_to_operator
+  - action: utter_code_switch_to_operator
+  - action: action_print_last_turn_info
+- story: Other 1 (/root/rasa_shitdev/tests/test_stories.yml)
+  steps:
+  - intent: other  # predicted: nlu_fallback: як поповнювати мою карту?
+  - action: utter_other
+  - action: action_print_last_turn_info
+- story: User asks to switch to operator and doesn't confirm (/root/rasa_shitdev/tests/test_stories.yml)
+  steps:
+  - intent: operator
+  - action: utter_confirm_switch_to_operator
+  - action: action_print_last_turn_info
+  - intent: bad_words  # predicted: nlu_fallback: бля бля
+  - action: utter_abort
+  - action: action_print_last_turn_info
+- story: electricity meter (reask after address and end) (/root/rasa_shitdev/tests/test_stories.yml)
+  steps:
+  - intent: electricity_meter
+  - action: utter_electricity
+  - intent: check_balance_gold  # predicted: nlu_fallback: скажіть будь ласка, який який баланс по моїй картці якомога швидше [голд]{"entity": "card_type", "value": "gold"}?
+    entities:
+    - card_type: gold
+  - action: action_glad_to_help
+- story: electricity meter (reask after address and end) (/root/rasa_shitdev/tests/test_stories.yml)
+  steps:
+  - intent: electricity_meter
+  - action: utter_electricity
+  - intent: other  # predicted: card_not_working: як моя карта пововнюється скажи будь ласочки?
+  - action: action_glad_to_help
+- story: random path 1 failed intent 2 (/root/rasa_shitdev/tests/test_stories.yml)
+  steps:
+  - intent: goodbye  # predicted: weather: яка погода у [Києві](city) ти мені скажи?
+    entities:
+    - city: Києві
+  - action: action_weather  # predicted: action_convert_name_utter_bye
+  - action: action_print_last_turn_info

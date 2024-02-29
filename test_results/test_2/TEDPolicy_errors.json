@@ -1,0 +1,51 @@
+[
+  {
+    "text": "скажіть будь ласка, який який баланс по моїй картці голд?",
+    "entities": [
+      {
+        "start": 52,
+        "end": 56,
+        "value": "gold",
+        "entity": "card_type"
+      }
+    ],
+    "predicted_entities": []
+  },
+  {
+    "text": "а вкажіть швидко будь ласка, який баланс на моїй картці стандарт?",
+    "entities": [
+      {
+        "start": 56,
+        "end": 64,
+        "value": "standard",
+        "entity": "card_type"
+      }
+    ],
+    "predicted_entities": []
+  },
+  {
+    "text": "яка погода у Києві ти мені скажи?",
+    "entities": [
+      {
+        "start": 13,
+        "end": 18,
+        "value": "Києві",
+        "entity": "city"
+      }
+    ],
+    "predicted_entities": []
+  },
+  {
+    "text": "яка погода у Києві ти мені скажи?",
+    "entities": [
+      {
+        "text": "яка погода у Києві ти мені скажи?",
+        "start": 13,
+        "end": 18,
+        "entity": "city",
+        "value": "Києві"
+      }
+    ],
+    "predicted_entities": []
+  }
+]

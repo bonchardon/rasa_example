@@ -1,0 +1,95 @@
+version: "3.1"
+stories:
+- story: electricity meter (ask one time only each + 1 OR) (/root/rasa_shitdev/tests/test_stories.yml)
+  steps:
+  - intent: electricity_meter
+  - action: utter_electricity
+  - intent: confirm
+  - action: utter_personal_account_number
+  - action: utter_beep
+  - intent: abort
+  - action: action_ask_one_more_time  # predicted: utter_abort
+  - action: utter_personal_account_number  # predicted: action_listen
+  - action: utter_beep
+  - intent: inform_number
+  - action: action_address
+  - intent: confirm
+  - action: action_electricity_meter
+  - action: utter_beep
+  - intent: inform_number
+  - action: action_pre_check
+  - intent: confirm
+  - action: action_final
+- story: electricity meter (ask one time only each + 2 OR) (/root/rasa_shitdev/tests/test_stories.yml)
+  steps:
+  - intent: electricity_meter
+  - action: utter_electricity
+  - intent: confirm
+  - action: utter_personal_account_number
+  - action: utter_beep
+  - intent: abort
+  - action: action_ask_one_more_time  # predicted: utter_abort
+  - action: utter_personal_account_number  # predicted: action_listen
+  - action: utter_beep
+  - intent: competence
+  - action: action_ask_one_more_time  # predicted: utter_competence
+  - action: utter_personal_account_number  # predicted: action_listen
+  - action: utter_beep
+  - intent: inform_number
+  - action: action_address
+  - intent: confirm
+  - action: action_electricity_meter
+  - action: utter_beep
+  - intent: inform_number
+  - action: action_pre_check
+  - intent: confirm
+  - action: action_final
+- story: electricity meter (ask one time only each + 3 OR) (/root/rasa_shitdev/tests/test_stories.yml)
+  steps:
+  - intent: electricity_meter
+  - action: utter_electricity
+  - intent: confirm
+  - action: utter_personal_account_number
+  - action: utter_beep
+  - intent: abort
+  - action: action_ask_one_more_time  # predicted: utter_abort
+  - action: utter_personal_account_number  # predicted: action_listen
+  - action: utter_beep
+  - intent: abort
+  - action: action_ask_one_more_time  # predicted: utter_abort
+  - action: utter_personal_account_number  # predicted: action_listen
+  - action: utter_beep
+  - intent: abort
+  - action: action_ask_one_more_time  # predicted: utter_abort
+  - action: utter_personal_account_number  # predicted: action_listen
+  - action: utter_beep
+  - intent: inform_number
+  - action: action_address
+  - intent: confirm
+  - action: action_electricity_meter
+  - action: utter_beep
+  - intent: inform_number
+  - action: action_pre_check
+  - intent: confirm
+  - action: action_final
+- story: electricity meter (ask one time only each + 4 and exit) (/root/rasa_shitdev/tests/test_stories.yml)
+  steps:
+  - intent: electricity_meter
+  - action: utter_electricity
+  - intent: confirm
+  - action: utter_personal_account_number
+  - action: utter_beep
+  - intent: bad_words
+  - action: action_ask_one_more_time  # predicted: utter_bad_words
+  - action: utter_personal_account_number  # predicted: action_listen
+  - action: utter_beep
+  - intent: card_not_working
+  - action: action_ask_one_more_time  # predicted: action_convert_name_utter_card_not_working
+  - action: utter_personal_account_number  # predicted: action_listen
+  - action: utter_beep
+  - intent: check_balance
+  - action: action_ask_one_more_time  # predicted: utter_check_balance
+  - action: utter_personal_account_number  # predicted: action_listen
+  - action: utter_beep
+  - intent: abort
+  - action: action_glad_to_help  # predicted: utter_abort

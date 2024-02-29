@@ -1,0 +1,1190 @@
+#### This file contains tests to evaluate that your bot behaves as expected.
+#### If you want to learn more, please see the docs: https://rasa.com/docs/rasa/testing-your-assistant
+
+stories:
+- story: start
+  steps:
+  - intent: start
+  - action: action_convert_name_utter_start
+  - action: action_print_last_turn_info
+
+# - story: card not working 1
+#   steps:
+#   - user: |
+#       карта не робить
+#     intent: stop_service
+#   - action: action_convert_name_utter_card_not_working
+#   - action: utter_code_switch_to_operator
+#   - action: action_print_last_turn_info
+
+- story: card not working failed intent
+  steps:
+  - user: |
+      карта не робить
+    intent: card_not_working
+  - action: action_convert_name_utter_card_not_working
+  - action: utter_code_switch_to_operator
+  - action: action_print_last_turn_info
+
+- story: happy path 1
+  steps:
+  - user: |
+      привет
+    intent: greet
+  - action: action_convert_name_hello
+  - action: action_print_last_turn_info
+
+# - story: happy path 1 failed intent
+#   steps:
+#   - user: |
+#       привет
+#     intent: check_balance_standard
+#   - action: action_convert_name_hello
+#   - action: action_print_last_turn_info
+
+- story: weather 1
+  steps:
+  - user: |
+      яка погода у [Києві](city) ти мені скажи?
+    intent: weather
+  - action: action_weather
+  - action: action_print_last_turn_info
+
+# - story: random path 1 failed intent 2
+#   steps:
+#   - user: |
+#       яка погода у [Києві](city) ти мені скажи?
+#     intent: goodbye
+#   - action: action_weather
+#   - action: action_print_last_turn_info
+
+- story: help from assistant 1
+  steps:
+  - user: |
+      як помогти ти мені можеш?
+    intent: competence
+  - action: utter_competence
+  - action: action_print_last_turn_info
+
+- story: check balance 1
+  steps:
+  - user: |
+      баланс скажи мені
+    intent: check_balance
+  - action: utter_check_balance
+  - action: action_print_last_turn_info
+
+# - story: check balance failed 
+#   steps:
+#   - user: |
+#       баланс скажи мені
+#     intent: goodbye
+#   - action: utter_check_balance
+#   - action: action_print_last_turn_info
+
+- story: thanks 1
+  steps:
+  - user: |
+      дуже вдячна вам!
+    intent: thanks
+  - action: utter_thanks
+  - action: action_print_last_turn_info
+
+# - story: thanks failed 
+#   steps:
+#   - user: |
+#       дуже вдячна вам!
+#     intent: goodbye
+#   - action: utter_thanks
+#   - action: action_print_last_turn_info
+
+- story: abort 1
+  steps:
+  - user: |
+      Ніт
+    intent: abort
+  - action: utter_abort
+  - action: action_print_last_turn_info
+
+# - story: abort failed
+#   steps:
+#   - user: |
+#       Ніт
+#     intent: other
+#   - action: utter_abort
+#   - action: action_print_last_turn_info
+
+- story: bye 1
+  steps:
+  - user: |
+      бувай прощавай
+    intent: goodbye
+  - action: action_convert_name_utter_bye
+  - action: utter_code_end_call
+  - action: action_print_last_turn_info
+
+- story: confirm 1
+  steps:
+  - user: |
+      так канєшно
+    intent: confirm
+  - action: utter_confirm
+  - action: action_print_last_turn_info
+
+- story: stop service 1
+  steps:
+  - user: |
+      відмовляюся від послуг ваших!
+    intent: stop_service
+  - action: utter_switch_to_operator
+  - action: utter_code_switch_to_operator
+  - action: action_print_last_turn_info
+
+- story: help from assistant 1
+  steps:
+  - user: |
+      а із чим саме ви могли б менідопомогти?
+    intent: competence
+  - action: utter_competence
+  - action: action_print_last_turn_info
+
+- story: balance gold 1
+  steps:
+  - user: |
+      скажіть будь ласка, який який баланс по моїй картці [голд]{"entity": "card_type", "value": "gold"}?
+    intent: check_balance_gold
+  - action: action_balance_gold
+  - action: action_print_last_turn_info
+
+# - story: balance gold failed
+#   steps:
+#   - user: |
+#       скажіть будь ласка, який який баланс по моїй картці [голд]{"entity": "card_type", "value": "gold"}?
+#     intent: bad_words
+#   - action: action_balance_gold
+#   - action: action_print_last_turn_info
+
+- story: balance standard 1
+  steps:
+  - user: |
+      а вкажіть швидко будь ласка, який баланс на моїй картці [стандарт]{"entity": "card_type", "value": "standard"}?
+    intent: check_balance_standard
+  - action: action_balance_standard
+  - action: action_print_last_turn_info
+
+# - story: balance standard failed
+#   steps:
+#   - user: |
+#       а вкажіть швидко будь ласка, який баланс на моїй картці [стандарт]{"entity": "card_type", "value": "standard"}?
+#     intent: bad_words
+#   - action: action_balance_standard
+#   - action: action_print_last_turn_info
+
+- story: bad_words
+  steps:
+  - user: |
+      бля бля сука бля сука нахуй бля єбать
+    intent: bad_words
+  - action: utter_bad_words
+  - action: action_print_last_turn_info
+
+- story: Currency exchange rate 1
+  steps:
+  - user: |
+      шо за курс зараз
+    intent: exchange_rate
+  - action: action_currency_rate
+  - action: action_print_last_turn_info
+
+- story: Fail and switch to operator
+  steps:
+  - intent: nlu_fallback
+  - action: utter_please_rephrase
+  - action: action_print_last_turn_info
+  - intent: nlu_fallback
+  - action: utter_fail
+  - action: utter_switch_to_operator
+  - action: utter_code_switch_to_operator
+  - action: action_print_last_turn_info
+
+- story: Other and switch to operator
+  steps:
+  - user: |
+      хочу відкрити рахунок новий
+    intent: other
+  - action: utter_other
+  - action: action_print_last_turn_info
+  - user: |
+      хочу відкрити рахунок новий
+    intent: other
+  - action: utter_switch_to_operator
+  - action: utter_code_switch_to_operator
+  - action: action_print_last_turn_info
+
+- story: Other
+  steps:
+  - user: |
+      хочу відкрити рахунок новий
+    intent: other
+  - action: utter_other
+  - action: action_print_last_turn_info
+
+- story: User asks to switch to operator
+  steps:
+  - user: |
+      оператора сюда будь ласка
+    intent: operator
+  - action: utter_confirm_switch_to_operator
+  - action: action_print_last_turn_info
+  - or:
+    - user: |
+        оператора сюда будь ласка
+      intent: operator
+    - user: |
+        ага ага да канєшно
+      intent: confirm
+  - action: utter_switch_to_operator
+  - action: utter_code_switch_to_operator
+  - action: action_print_last_turn_info
+
+- story: User asks to switch to operator and doesn't confirm
+  steps:
+  - user: |
+      оператора сюда
+    intent: operator
+  - action: utter_confirm_switch_to_operator
+  - action: action_print_last_turn_info
+  - or:
+    - user: |
+        хочу відкрити рахунок новий
+      intent: other
+    - user: |
+        не зараз будь ласка
+      intent: abort
+    - user: |
+        сука підор підорюга
+      intent: bad_words
+  - action: utter_abort
+  - action: action_print_last_turn_info
+
+# electro meter: test 1
+
+- story: part 1 happy  
+  steps: 
+  - user: |
+      хочу світло вказати вам своє!
+    intent: electricity_meter
+  - action: utter_electricity
+  - user: |
+      так канєшно
+    intent: confirm
+  - action: utter_personal_account_number
+  - action: utter_beep
+  - user: |
+      нуль нуль два три три чотири сім сім нуль 
+    intent: inform_number
+  - action: action_address
+  - checkpoint: check_1
+
+- story: inform electricity 1.1
+  steps:
+  - user: |
+      хочу світло вказати вам своє!
+    intent: electricity_meter
+  - action: utter_electricity
+  - user: |
+      да канєшно
+    intent: confirm
+  - action: utter_personal_account_number
+  - action: utter_beep
+  - user: |
+      нуль нуль два три три чотири сім сім вісім нуль один
+    intent: inform_number
+  - action: action_address
+  - user: |
+      нуль нуль два три три чотири сім сім три три
+    intent: inform_number
+  - action: action_address
+  - checkpoint: check_1
+
+- story: inform electricity 1.2
+  steps:
+  - user: |
+      хочу світло вказати вам своє!
+    intent: electricity_meter
+  - action: utter_electricity
+  - user: |
+      да канєшно
+    intent: confirm
+  - action: utter_personal_account_number
+  - action: utter_beep
+  - user: |
+      нуль нуль два три три чотири сім сім 
+    intent: inform_number
+  - action: action_address
+  - user: |
+      нуль нуль два три три чотири сім сім 
+    intent: inform_number
+  - action: action_address
+  - user: |
+      нуль нуль два три три чотири сім сім 
+    intent: inform_number
+  - action: action_address
+  - checkpoint: check_1
+
+- story: inform electricity 2.0 part
+  steps:
+  - checkpoint: check_1
+  - user: |
+      да канєшно
+    intent: confirm
+  - action: action_electricity_meter
+  - action: utter_beep
+  - checkpoint: check_2
+
+- story: inform electro 2.1 part
+  steps:
+  - checkpoint: check_2
+  - user: |
+      нуль нуль два три три чотири сім сім 
+    intent: inform_number
+  - checkpoint: trying_smth
+
+- story: inform electro 2.1.1 (first try)
+  steps:
+  - checkpoint: trying_smth
+  - action: action_pre_check
+  - checkpoint: final_confirm
+
+- story: inform electricity 2.2
+  steps:
+  - checkpoint: final_confirm
+  - user: |
+      да канєшно
+    intent: confirm
+  - action: action_final
+
+- story: inform electro 2.1.2 (second try)
+  steps:
+  - checkpoint: final_confirm
+  - user: |
+      нуль нуль два три три чотири сім сім три три
+    intent: inform_number
+  - action: action_pre_check
+  - user: |
+      да канєшно
+    intent: confirm
+  - action: action_final
+
+# electro meter: test 2
+
+- story: electricity meter (reask after address and end)
+  steps: 
+  - intent: electricity_meter
+  - action: utter_electricity
+  - or:
+    - user: |
+        не зараз будь ласка
+      intent: abort
+    - user: |
+        бля бля сука бля нахуя
+      intent: bad_words
+    - user: |
+        карта не робить шось
+      intent: card_not_working
+    - user: |
+        який баланс скажи 
+      intent: check_balance
+    - user: |
+        скажіть будь ласка, який який баланс по моїй картці [голд]{"entity": "card_type", "value": "gold"}?
+      intent: check_balance_gold
+    - user: |
+        а вкажіть швидко будь ласка, який баланс на моїй картці пошвидше [стандарт]{"entity": "card_type", "value": "standard"}?
+      intent: check_balance_standard
+    - user: |
+        як помогти ти мені можеш скажи а?
+      intent: competence
+    - user: |
+        пока давай побачимось
+      intent: goodbye
+    - user: |
+        привет
+      intent: greet
+    - intent: nlu_fallback
+    - user: |
+        оператора сюда будь ласка
+      intent: operator
+    - user: |
+        скільки коштує мій тариф скажіть будь ласка
+      intent: other
+    - intent: start
+    - user: |
+        відмовляюся від послуг ваших назавжди!
+      intent: stop_service
+    - user: |
+        дуже вдячна вам буду до кінця життя!
+      intent: thanks
+    - user: |
+        шо за курс зараз скажіть будь ласка
+      intent: exchange_rate
+    - user: |
+        яка погода у [Києві](city) ти мені скажи будь ласка?
+      intent: weather
+  - action: action_glad_to_help
+
+- story: electricity meter (ask one time only each)
+  steps: 
+  - user: |
+      хочу світло вказати вам своє!
+    intent: electricity_meter
+  - action: utter_electricity
+  - user: |
+      так канєшно
+    intent: confirm
+  - action: utter_personal_account_number
+  - action: utter_beep
+  - user: |
+      нуль нуль два три три чотири сім сім нуль 
+    intent: inform_number
+  - action: action_address
+  - user: |
+      да канєшно
+    intent: confirm
+  - action: action_electricity_meter
+  - action: utter_beep
+  - user: |
+      нуль нуль два три три чотири сім сім 
+    intent: inform_number
+  - action: action_pre_check
+  - user: |
+      да канєшно
+    intent: confirm
+  - action: action_final
+
+- story: electricity meter (ask one time only each + 1 OR)
+  steps: 
+  - user: |
+      хочу світло вказати вам своє!
+    intent: electricity_meter
+  - action: utter_electricity
+  - user: |
+      так канєшно
+    intent: confirm
+  - action: utter_personal_account_number
+  - action: utter_beep
+  - user: |
+      не зараз будь ласка
+    intent: abort
+  - action: action_ask_one_more_time
+  - action: utter_personal_account_number
+  - action: utter_beep
+  - user: |
+      нуль нуль два три три чотири сім сім нуль 
+    intent: inform_number
+  - action: action_address
+  - user: |
+      да канєшно
+    intent: confirm
+  - action: action_electricity_meter
+  - action: utter_beep
+  - user: |
+      нуль нуль два три три чотири сім сім 
+    intent: inform_number
+  - action: action_pre_check
+  - user: |
+      да канєшно
+    intent: confirm
+  - action: action_final
+
+- story: electricity meter (ask one time only each + 2 OR)
+  steps: 
+  - user: |
+      хочу світло вказати вам своє!
+    intent: electricity_meter
+  - action: utter_electricity
+  - user: |
+      так канєшно
+    intent: confirm
+  - action: utter_personal_account_number
+  - action: utter_beep
+  - user: |
+      не зараз будь ласка
+    intent: abort
+  - action: action_ask_one_more_time
+  - action: utter_personal_account_number
+  - action: utter_beep
+  - user: |
+      як помогти ти мені можеш скажи а?
+    intent: competence
+  - action: action_ask_one_more_time
+  - action: utter_personal_account_number
+  - action: utter_beep
+  - user: |
+      нуль нуль два три три чотири сім сім нуль 
+    intent: inform_number
+  - action: action_address
+  - user: |
+      да канєшно
+    intent: confirm
+  - action: action_electricity_meter
+  - action: utter_beep
+  - user: |
+      нуль нуль два три три чотири сім сім 
+    intent: inform_number
+  - action: action_pre_check
+  - user: |
+      да канєшно
+    intent: confirm
+  - action: action_final
+
+- story: electricity meter (ask one time only each + 3 OR)
+  steps: 
+  - user: |
+      хочу світло вказати вам своє!
+    intent: electricity_meter
+  - action: utter_electricity
+  - user: |
+      так канєшно
+    intent: confirm
+  - action: utter_personal_account_number
+  - action: utter_beep
+  - user: |
+      не зараз будь ласка
+    intent: abort
+  - action: action_ask_one_more_time
+  - action: utter_personal_account_number
+  - action: utter_beep
+  - user: |
+      не зараз будь ласка
+    intent: abort
+  - action: action_ask_one_more_time
+  - action: utter_personal_account_number
+  - action: utter_beep
+  - user: |
+      не зараз будь ласка
+    intent: abort
+  - action: action_ask_one_more_time
+  - action: utter_personal_account_number
+  - action: utter_beep
+  - user: |
+      нуль нуль два три три чотири сім сім нуль 
+    intent: inform_number
+  - action: action_address
+  - user: |
+      да канєшно
+    intent: confirm
+  - action: action_electricity_meter
+  - action: utter_beep
+  - user: |
+      нуль нуль два три три чотири сім сім 
+    intent: inform_number
+  - action: action_pre_check
+  - user: |
+      да канєшно
+    intent: confirm
+  - action: action_final
+
+- story: electricity meter (ask one time only each + 4 and exit)
+  steps: 
+  - user: |
+      хочу світло вказати вам своє!
+    intent: electricity_meter
+  - action: utter_electricity
+  - user: |
+      так канєшно
+    intent: confirm
+  - action: utter_personal_account_number
+  - action: utter_beep
+  - user: |
+      бля бля сука бля нахуя
+    intent: bad_words
+  - action: action_ask_one_more_time
+  - action: utter_personal_account_number
+  - action: utter_beep
+  - user: |
+      карта не робить шось
+    intent: card_not_working
+  - action: action_ask_one_more_time
+  - action: utter_personal_account_number
+  - action: utter_beep
+  - user: |
+      який баланс скажи 
+    intent: check_balance
+  - action: action_ask_one_more_time
+  - action: utter_personal_account_number
+  - action: utter_beep
+  - user: |
+      не зараз будь ласка
+    intent: abort
+  - action: action_glad_to_help
+
+- story: electricity meter (ask two times each)
+  steps: 
+  - user: |
+      хочу світло вказати вам своє!
+    intent: electricity_meter
+  - action: utter_electricity
+  - user: |
+      так канєшно
+    intent: confirm
+  - action: utter_personal_account_number
+  - action: utter_beep
+  - user: |
+      нуль нуль два три три чотири сім сім нуль 
+    intent: inform_number
+  - action: action_address
+  - user: |
+      нуль нуль два три три чотири сім сім нуль 
+    intent: inform_number
+  - action: action_address
+  - user: |
+      да канєшно
+    intent: confirm
+  - action: action_electricity_meter
+  - action: utter_beep
+  - user: |
+      нуль нуль два три три чотири сім сім 
+    intent: inform_number
+  - action: action_pre_check 
+  - user: |
+      нуль нуль два три три чотири сім сім 
+    intent: inform_number
+  - action: action_pre_check
+  - user: |
+      да канєшно
+    intent: confirm
+  - action: action_final
+
+- story: electricity meter (ask three time only each)
+  steps: 
+  - user: |
+      хочу світло вказати вам своє!
+    intent: electricity_meter
+  - action: utter_electricity
+  - user: |
+      так канєшно
+    intent: confirm
+  - action: utter_personal_account_number
+  - action: utter_beep
+  - user: |
+      нуль нуль два три три чотири сім сім нуль 
+    intent: inform_number
+  - action: action_address
+  - user: |
+      нуль нуль два три три чотири сім сім нуль 
+    intent: inform_number
+  - action: action_address
+  - user: |
+      нуль нуль два три три чотири сім сім нуль 
+    intent: inform_number
+  - action: action_address
+  - user: |
+      да канєшно
+    intent: confirm
+  - action: action_electricity_meter
+  - action: utter_beep
+  - user: |
+      нуль нуль два три три чотири сім сім 
+    intent: inform_number
+  - action: action_pre_check 
+  - user: |
+      нуль нуль два три три чотири сім сім 
+    intent: inform_number
+  - action: action_pre_check
+  - user: |
+      нуль нуль два три три чотири сім сім 
+    intent: inform_number
+  - action: action_pre_check
+  - user: |
+      да канєшно
+    intent: confirm
+  - action: action_final
+
+- story: electricity meter (1/2)
+  steps: 
+  - user: |
+      хочу світло вказати вам своє!
+    intent: electricity_meter
+  - action: utter_electricity
+  - user: |
+      так канєшно
+    intent: confirm
+  - action: utter_personal_account_number
+  - action: utter_beep
+  - user: |
+      нуль нуль два три три чотири сім сім нуль 
+    intent: inform_number
+  - action: action_address
+  - user: |
+      да канєшно
+    intent: confirm
+  - action: action_electricity_meter
+  - action: utter_beep
+  - user: |
+      нуль нуль два три три чотири сім сім 
+    intent: inform_number
+  - action: action_pre_check 
+  - user: |
+      нуль нуль два три три чотири сім сім 
+    intent: inform_number
+  - action: action_pre_check
+  - user: |
+      да канєшно
+    intent: confirm
+  - action: action_final
+
+- story: electricity meter (1/3)
+  steps: 
+  - user: |
+      хочу світло вказати вам своє!
+    intent: electricity_meter
+  - action: utter_electricity
+  - user: |
+      так канєшно
+    intent: confirm
+  - action: utter_personal_account_number
+  - action: utter_beep
+  - user: |
+      нуль нуль два три три чотири сім сім нуль 
+    intent: inform_number
+  - action: action_address
+  - user: |
+      да канєшно
+    intent: confirm
+  - action: action_electricity_meter
+  - action: utter_beep
+  - user: |
+      нуль нуль два три три чотири сім сім 
+    intent: inform_number
+  - action: action_pre_check 
+  - user: |
+      нуль нуль два три три чотири сім сім 
+    intent: inform_number
+  - action: action_pre_check
+  - user: |
+      нуль нуль два три три чотири сім сім 
+    intent: inform_number
+  - action: action_pre_check
+  - user: |
+      да канєшно
+    intent: confirm
+  - action: action_final
+
+- story: electricity meter (3/1)
+  steps: 
+  - user: |
+      хочу світло вказати вам своє!
+    intent: electricity_meter
+  - action: utter_electricity
+  - user: |
+      так канєшно
+    intent: confirm
+  - action: utter_personal_account_number
+  - action: utter_beep
+  - user: |
+      нуль нуль два три три чотири сім сім нуль 
+    intent: inform_number
+  - action: action_address
+  - user: |
+      нуль нуль два три три чотири сім сім нуль 
+    intent: inform_number
+  - action: action_address
+  - user: |
+      нуль нуль два три три чотири сім сім нуль 
+    intent: inform_number
+  - action: action_address
+  - user: |
+      да канєшно
+    intent: confirm
+  - action: action_electricity_meter
+  - action: utter_beep
+  - user: |
+      нуль нуль два три три чотири сім сім 
+    intent: inform_number
+  - action: action_pre_check 
+  - user: |
+      да канєшно
+    intent: confirm
+  - action: action_final
+
+- story: electricity meter (2/1)
+  steps: 
+  - user: |
+      хочу світло вказати вам своє!
+    intent: electricity_meter
+  - action: utter_electricity
+  - user: |
+      так канєшно
+    intent: confirm
+  - action: utter_personal_account_number
+  - action: utter_beep
+  - user: |
+      нуль нуль два три три чотири сім сім нуль 
+    intent: inform_number
+  - action: action_address
+  - user: |
+      нуль нуль два три три чотири сім сім нуль 
+    intent: inform_number
+  - action: action_address
+  - user: |
+      да канєшно
+    intent: confirm
+  - action: action_electricity_meter
+  - action: utter_beep
+  - user: |
+      нуль нуль два три три чотири сім сім 
+    intent: inform_number
+  - action: action_pre_check 
+  - user: |
+      да канєшно
+    intent: confirm
+  - action: action_final
+
+
+# last part testing 1/2
+- story: electricity meter (clarify electro meter 1 time)
+  steps: 
+  - user: |
+      хочу світло вказати вам своє!
+    intent: electricity_meter
+  - action: utter_electricity
+  - user: |
+      так канєшно
+    intent: confirm
+  - action: utter_personal_account_number
+  - action: utter_beep
+  - user: |
+      нуль нуль два три три чотири сім сім нуль 
+    intent: inform_number
+  - action: action_address
+  - user: |
+      да канєшно
+    intent: confirm
+  - action: action_electricity_meter
+  - action: utter_beep
+  - user: |
+      хочу світло вказати вам своє!
+    intent: electricity_meter
+  - action: utter_lets_try_one_more_time
+  - action: action_electricity_meter
+  - action: utter_beep
+  - user: |
+      нуль нуль два три три чотири сім сім 
+    intent: inform_number
+  - action: action_pre_check
+  - user: |
+      да канєшно
+    intent: confirm
+  - action: action_final
+
+- story: electricity meter (clarify electro meter 2 times)
+  steps: 
+  - user: |
+      хочу світло вказати вам своє!
+    intent: electricity_meter
+  - action: utter_electricity
+  - user: |
+      так канєшно
+    intent: confirm
+  - action: utter_personal_account_number
+  - action: utter_beep
+  - user: |
+      нуль нуль два три три чотири сім сім нуль 
+    intent: inform_number
+  - action: action_address
+  - user: |
+      да канєшно
+    intent: confirm
+  - action: action_electricity_meter
+  - action: utter_beep
+  - user: |
+      хочу світло вказати вам своє!
+    intent: electricity_meter
+  - action: utter_lets_try_one_more_time
+  - action: action_electricity_meter
+  - action: utter_beep
+  - user: |
+      хочу світло вказати вам своє!
+    intent: electricity_meter
+  - action: utter_lets_try_one_more_time
+  - action: action_electricity_meter
+  - action: utter_beep
+  - user: |
+      нуль нуль два три три чотири сім сім 
+    intent: inform_number
+  - action: action_pre_check
+  - user: |
+      да канєшно
+    intent: confirm
+  - action: action_final
+
+- story: electricity meter (clarify electro meter 3 times)
+  steps: 
+  - user: |
+      хочу світло вказати вам своє!
+    intent: electricity_meter
+  - action: utter_electricity
+  - user: |
+      так канєшно
+    intent: confirm
+  - action: utter_personal_account_number
+  - action: utter_beep
+  - user: |
+      нуль нуль два три три чотири сім сім нуль 
+    intent: inform_number
+  - action: action_address
+  - user: |
+      да канєшно
+    intent: confirm
+  - action: action_electricity_meter
+  - action: utter_beep
+  - user: |
+      хочу світло вказати вам своє!
+    intent: electricity_meter
+  - action: utter_lets_try_one_more_time
+  - action: action_electricity_meter
+  - action: utter_beep
+  - user: |
+      хочу світло вказати вам своє!
+    intent: electricity_meter
+  - action: utter_lets_try_one_more_time
+  - action: action_electricity_meter
+  - action: utter_beep
+  - user: |
+      хочу світло вказати вам своє!
+    intent: electricity_meter
+  - action: utter_lets_try_one_more_time
+  - action: action_electricity_meter
+  - action: utter_beep
+  - user: |
+      нуль нуль два три три чотири сім сім 
+    intent: inform_number
+  - action: action_pre_check
+  - user: |
+      да канєшно
+    intent: confirm
+  - action: action_final
+
+- story: electricity meter (clarify electro meter 4 times and exit)
+  steps: 
+  - user: |
+      хочу світло вказати вам своє!
+    intent: electricity_meter
+  - action: utter_electricity
+  - user: |
+      так канєшно
+    intent: confirm
+  - action: utter_personal_account_number
+  - action: utter_beep
+  - user: |
+      нуль нуль два три три чотири сім сім нуль 
+    intent: inform_number
+  - action: action_address
+  - user: |
+      да канєшно
+    intent: confirm
+  - action: action_electricity_meter
+  - action: utter_beep
+  - user: |
+      хочу світло вказати вам своє!
+    intent: electricity_meter
+  - action: utter_lets_try_one_more_time
+  - action: action_electricity_meter
+  - action: utter_beep
+  - user: |
+      хочу світло вказати вам своє!
+    intent: electricity_meter
+  - action: utter_lets_try_one_more_time
+  - action: action_electricity_meter
+  - action: utter_beep
+  - user: |
+      хочу світло вказати вам своє!
+    intent: electricity_meter
+  - action: utter_lets_try_one_more_time
+  - action: action_electricity_meter
+  - action: utter_beep
+  - user: |
+      хочу світло вказати вам своє!
+    intent: electricity_meter
+  - action: utter_bad_finish
+
+# last part testing 2/2
+
+- story: electricity meter (final clarify electro meter 1 time)
+  steps: 
+  - user: |
+      хочу світло вказати вам своє!
+    intent: electricity_meter
+  - action: utter_electricity
+  - user: |
+      так канєшно
+    intent: confirm
+  - action: utter_personal_account_number
+  - action: utter_beep
+  - user: |
+      нуль нуль два три три чотири сім сім нуль 
+    intent: inform_number
+  - action: action_address
+  - user: |
+      да канєшно
+    intent: confirm
+  - action: action_electricity_meter
+  - action: utter_beep
+  - user: |
+      нуль нуль два три три чотири сім сім 
+    intent: inform_number
+  - action: action_pre_check
+  - user: |
+      хочу світло вказати вам своє!
+    intent: electricity_meter
+  - action: utter_lets_try_one_more_time
+  - action: action_electricity_meter
+  - action: utter_beep
+  - user: |
+      нуль нуль два три три чотири сім сім нуль 
+    intent: inform_number
+  - user: |
+      да канєшно
+    intent: confirm
+  - action: action_final
+
+- story: electricity meter (final clarify electro meter 2 times)
+  steps: 
+  - user: |
+      хочу світло вказати вам своє!
+    intent: electricity_meter
+  - action: utter_electricity
+  - user: |
+      так канєшно
+    intent: confirm
+  - action: utter_personal_account_number
+  - action: utter_beep
+  - user: |
+      нуль нуль два три три чотири сім сім нуль 
+    intent: inform_number
+  - action: action_address
+  - user: |
+      да канєшно
+    intent: confirm
+  - action: action_electricity_meter
+  - action: utter_beep
+  - user: |
+      нуль нуль два три три чотири сім сім 
+    intent: inform_number
+  - action: action_pre_check
+  - user: |
+      хочу світло вказати вам своє!
+    intent: electricity_meter
+  - action: utter_lets_try_one_more_time
+  - action: action_electricity_meter
+  - action: utter_beep
+  - user: |
+      хочу світло вказати вам своє!
+    intent: electricity_meter
+  - action: utter_lets_try_one_more_time
+  - action: action_electricity_meter
+  - action: utter_beep
+  - user: |
+      нуль нуль два три три чотири сім сім нуль 
+    intent: inform_number
+  - user: |
+      да канєшно
+    intent: confirm
+  - action: action_final
+
+- story: electricity meter (final clarify electro meter 3 times)
+  steps: 
+  - user: |
+      хочу світло вказати вам своє!
+    intent: electricity_meter
+  - action: utter_electricity
+  - user: |
+      так канєшно
+    intent: confirm
+  - action: utter_personal_account_number
+  - action: utter_beep
+  - user: |
+      нуль нуль два три три чотири сім сім нуль 
+    intent: inform_number
+  - action: action_address
+  - user: |
+      да канєшно
+    intent: confirm
+  - action: action_electricity_meter
+  - action: utter_beep
+  - user: |
+      нуль нуль два три три чотири сім сім 
+    intent: inform_number
+  - action: action_pre_check
+  - user: |
+      хочу світло вказати вам своє!
+    intent: electricity_meter
+  - action: utter_lets_try_one_more_time
+  - action: action_electricity_meter
+  - action: utter_beep
+  - user: |
+      хочу світло вказати вам своє!
+    intent: electricity_meter
+  - action: utter_lets_try_one_more_time
+  - action: action_electricity_meter
+  - action: utter_beep
+  - user: |
+      хочу світло вказати вам своє!
+    intent: electricity_meter
+  - action: utter_lets_try_one_more_time
+  - action: action_electricity_meter
+  - action: utter_beep
+  - user: |
+      нуль нуль два три три чотири сім сім нуль 
+    intent: inform_number
+  - user: |
+      да канєшно
+    intent: confirm
+  - action: action_final
+
+- story: electricity meter (final clarify electro meter 4 times)
+  steps: 
+  - user: |
+      хочу світло вказати вам своє!
+    intent: electricity_meter
+  - action: utter_electricity
+  - user: |
+      так канєшно
+    intent: confirm
+  - action: utter_personal_account_number
+  - action: utter_beep
+  - user: |
+      нуль нуль два три три чотири сім сім нуль 
+    intent: inform_number
+  - action: action_address
+  - user: |
+      да канєшно
+    intent: confirm
+  - action: action_electricity_meter
+  - action: utter_beep
+  - user: |
+      нуль нуль два три три чотири сім сім 
+    intent: inform_number
+  - action: action_pre_check
+  - user: |
+      хочу світло вказати вам своє!
+    intent: electricity_meter
+  - action: utter_lets_try_one_more_time
+  - action: action_electricity_meter
+  - action: utter_beep
+  - user: |
+      хочу світло вказати вам своє!
+    intent: electricity_meter
+  - action: utter_lets_try_one_more_time
+  - action: action_electricity_meter
+  - action: utter_beep
+  - user: |
+      хочу світло вказати вам своє!
+    intent: electricity_meter
+  - action: utter_lets_try_one_more_time
+  - action: action_electricity_meter
+  - action: utter_beep
+  - user: |
+      хочу світло вказати вам своє!
+    intent: electricity_meter
+  - action: utter_bad_finish

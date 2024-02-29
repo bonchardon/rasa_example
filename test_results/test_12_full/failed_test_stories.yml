@@ -1,0 +1,7 @@
+version: "3.1"
+stories:
+- story: Other (/root/rasa_shitdev/tests/test_stories.yml)
+  steps:
+  - intent: other  # predicted: nlu_fallback: як поповнювати мою карту?
+  - action: utter_other
+  - action: action_print_last_turn_info

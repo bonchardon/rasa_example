@@ -1,0 +1,129 @@
+version: '3.1'
+intents:
+- abort
+- bad_words
+- card_not_working
+- check_balance
+- check_balance_gold
+- check_balance_standard
+- competence
+- confirm
+- goodbye
+- greet
+- nlu_fallback
+- operator
+- other
+- start
+- stop_service
+- thanks
+- exchange_rate
+- weather
+- inform_number
+- electricity_meter
+entities:
+- card_type:
+    values:
+    - gold
+    - standard
+- numeral
+- number
+#slots:
+#  counter:
+#    type: any
+#    mappings:
+#      - type: from_entity
+#        entity: counter
+#  attempts:
+#    type: float
+#    mappings:
+#      - type: from_entity
+#        entity: attempts
+# forms: 
+#   getting_numbers:
+#     numeral:
+#       - type: from_text
+# slots:
+#   numeral:
+#     - type: text
+
+responses:
+  utter_start:
+  - text: 'Олександре, вас вітає Смідл-банкінг бот, сформулюйте будь ласка ваш запит, наприклад: перевірити баланс, закрити картку або турбують проблеми з карткою.'
+  utter_greet:
+  - text: Вітаю вас.
+  - text: Вітаю.
+  utter_confirm:
+  - text: Ми завжди раді вам допомогти. Сформулюйте будь ласка ваш запит.
+  utter_thanks:
+  - text: Прошу!
+  - text: Ми завжди раді допомогти!
+  utter_abort:
+  - text: Будемо раді вам допомогти, якщо виникнуть проблеми.
+  utter_card_not_working:
+  - text: Олександре, вашу карту для виплат було заблоковано, оскільки ми зафіксували підозрілу активність по ній. Зачекайте будь ласка на з'єднання з оператором.
+  utter_check_balance:
+  - text: Вас цікавить баланс по картці Голд чи по картці Стандарт?
+  utter_gold_balance:
+  - text: Ваш баланс по картці Голд  складає чотириста доларів, чим іще ми можемо вам допомогти?
+  utter_standard_balance:
+  - text: Ваш баланс по картці Стандарт складає триста гривень, чим іще ми можемо вам допомогти?
+  utter_switch_to_operator:
+  - text: Зачекайте будь ласка на з'єднання з оператором.
+  utter_competence:
+  - text: 'Я можу допомогти вам з такими питаннями: перевірка балансу, закриття рахунку, перевірка проблем з картою та поточний курс валют.'
+  utter_bye:
+  - text: До зв'язку Олександре!
+  utter_bad_words:
+  - text: Будь ласка ввічливо сформулюйте ваш запит.
+  utter_please_rephrase:
+  - text: Не зовсім зрозуміла, повторіть або переформулюйте ваш запит будь ласка.
+  utter_fail:
+  - text: На жаль, я вас не розумію.
+  utter_other:
+  - text: Наразі я ще не вмію опрацьовувати такі питання. Будь ласка, переформулюйте ваш запит.
+  utter_confirm_switch_to_operator:
+  - text: Ви бажаєте зєднатися з оператором?
+  utter_code_switch_to_operator:
+  - text: '#COMMAND:REDIRECT_CALL:7738'
+  utter_code_end_call:
+  - text: '#COMMAND:END_CALL'
+    # NEW DATA STARTING FROM HERE
+  utter_electricity_meter:
+  - text: 'Вкажіть будь ласка ваші показники по одній цифрі. Наприклад, один два три вісім сім, тощо'
+  utter_electricity:
+  - text: Ви бажаєте повідомити показники лічильника?
+  utter_personal_account_number:
+  - text: Будь ласка, після звукового сигналу назвіть номер вашого особового договору по одній цифрі, наприклад один два чотири шість нуль один.
+  utter_beep:
+  - text: '#COMMAND:BEEP'
+  utter_cannot_confirm_at_all:
+  - text: На жаль, мені не вдалося підтвердити номер договору. Чим ще ми можемо вам допомогти?
+  utter_lets_try_one_more_time:
+  - text: Спробуємо ще раз.
+  utter_bad_finish:
+  - text: На жаль, я не почула показники лічильників. Чим іще ми можемо вам допомогти?
+
+session_config:
+  session_expiration_time: 60
+  carry_over_slots_to_new_session: true
+actions:
+- action_currency_rate
+- action_convert_name_hello
+- action_print_last_turn_info
+- action_convert_name_utter_start
+- action_convert_name_utter_card_not_working
+- action_convert_name_utter_bye
+- action_balance_gold
+- action_balance_standard
+- action_weather
+# new from here
+- action_address
+- action_glad_to_help
+- action_electricity_meter
+- action_pre_check
+- action_final
+- action_ask_one_more_time
+- action_address_wrong
+- action_account_wrong_finish
+- action_write_to_file
+

@@ -1,0 +1,251 @@
+version: "3.1"
+
+stories:
+
+- story: start
+  steps:
+  - intent: start
+  - action: action_convert_name_utter_start
+  - action: action_print_last_turn_info
+
+- story: greet
+  steps:
+  - intent: greet
+  - action: action_convert_name_hello
+  - action: action_print_last_turn_info
+
+- story: card not working
+  steps:
+  - intent: card_not_working
+  - action: action_convert_name_utter_card_not_working
+  - action: utter_code_switch_to_operator
+  - action: action_print_last_turn_info
+
+- story: stop service
+  steps:
+  - intent: stop_service
+  - action: utter_switch_to_operator
+  - action: utter_code_switch_to_operator
+  - action: action_print_last_turn_info
+
+- story: help from assistant
+  steps:
+  - intent: competence
+  - action: utter_competence
+  - action: action_print_last_turn_info
+
+- story: balance gold
+  steps:
+  - intent: check_balance_gold
+  - action: action_balance_gold
+  - action: action_print_last_turn_info
+
+- story: balance standard
+  steps:
+  - intent: check_balance_standard
+  - action: action_balance_standard
+  - action: action_print_last_turn_info
+
+- story: check balance
+  steps:
+  - intent: check_balance
+  - action: utter_check_balance
+  - action: action_print_last_turn_info
+
+- story: thanks
+  steps:
+  - intent: thanks
+  - action: utter_thanks
+  - action: action_print_last_turn_info
+
+- story: abort
+  steps:
+  - intent: abort
+  - action: utter_abort
+  - action: action_print_last_turn_info
+
+- story: confirm
+  steps:
+  - intent: confirm
+  - action: utter_confirm
+  - action: action_print_last_turn_info
+
+- story: bye
+  steps:
+  - intent: goodbye
+  - action: action_convert_name_utter_bye
+  - action: utter_code_end_call
+  - action: action_print_last_turn_info
+
+- story: bad_words
+  steps:
+  - intent: bad_words
+  - action: utter_bad_words
+  - action: action_print_last_turn_info
+
+- story: Fail and switch to operator
+  steps:
+  - intent: nlu_fallback
+  - action: utter_please_rephrase
+  - action: action_print_last_turn_info
+  - intent: nlu_fallback
+  - action: utter_fail
+  - action: utter_switch_to_operator
+  - action: utter_code_switch_to_operator
+  - action: action_print_last_turn_info
+
+- story: Other and switch to operator
+  steps:
+  - intent: other
+  - action: utter_other
+  - action: action_print_last_turn_info
+  - intent: other
+  - action: utter_switch_to_operator
+  - action: utter_code_switch_to_operator
+  - action: action_print_last_turn_info
+
+- story: Other
+  steps:
+  - intent: other
+  - action: utter_other
+  - action: action_print_last_turn_info
+
+- story: User asks to switch to operator
+  steps:
+  - intent: operator
+  - action: utter_confirm_switch_to_operator
+  - action: action_print_last_turn_info
+  - or:
+    - intent: operator
+    - intent: confirm
+  - action: utter_switch_to_operator
+  - action: utter_code_switch_to_operator
+  - action: action_print_last_turn_info
+
+- story: User asks to switch to operator and doesn't confirm
+  steps:
+  - intent: operator
+  - action: utter_confirm_switch_to_operator
+  - action: action_print_last_turn_info
+  - or:
+    - intent: other
+    - intent: abort
+    - intent: bad_words
+  - action: utter_abort
+  - action: action_print_last_turn_info
+
+- story: Currency exchange rate
+  steps:
+  - intent: exchange_rate
+  - action: action_currency_rate
+  - action: action_print_last_turn_info
+
+- story: Weather
+  steps:
+  - intent: weather
+  - action: action_weather
+  - action: action_print_last_turn_info
+
+# NEW STARTS FROM HERE
+
+- story: inform electricity decline
+  steps:
+  - intent: electricity_meter
+  - action: utter_electricity
+  - or:
+      - intent: abort
+      - intent: bad_words
+      - intent: card_not_working
+      - intent: check_balance
+      - intent: check_balance_gold
+      - intent: check_balance_standard
+      - intent: competence
+      - intent: goodbye
+      - intent: greet
+      - intent: nlu_fallback
+      - intent: operator
+      - intent: other
+      - intent: start
+      - intent: stop_service
+      - intent: thanks
+      - intent: exchange_rate
+      - intent: weather
+  - action: action_glad_to_help
+
+
+- story: inform electricity 1
+  steps:
+  - intent: electricity_meter
+  - action: utter_electricity
+  - intent: confirm
+  - action: utter_personal_account_number
+  - action: utter_beep
+  - intent: inform_number
+  - action: action_address
+  - checkpoint: check_1
+
+- story: inform electricity 1.1
+  steps:
+  - intent: electricity_meter
+  - action: utter_electricity
+  - intent: confirm
+  - action: utter_personal_account_number
+  - action: utter_beep
+  - intent: inform_number
+  - action: action_address
+  - intent: inform_number
+  - action: action_address
+  - checkpoint: check_1
+
+- story: inform electricity 1.2
+  steps:
+  - intent: electricity_meter
+  - action: utter_electricity
+  - intent: confirm
+  - action: utter_personal_account_number
+  - action: utter_beep
+  - intent: inform_number
+  - action: action_address
+  - intent: inform_number
+  - action: action_address
+  - intent: inform_number
+  - action: action_address
+  - checkpoint: check_1
+
+
+- story: inform electricity 2.0 part
+  steps:
+  - checkpoint: check_1
+  - intent: confirm
+  - action: action_electricity_meter
+  - action: utter_beep
+  - checkpoint: check_2
+
+- story: inform electro 2.1 part
+  steps:
+  - checkpoint: check_2
+  - intent: inform_number
+  - checkpoint: trying_smth
+
+- story: inform electro 2.1.1 (first try)
+  steps:
+  - checkpoint: trying_smth
+  - action: action_pre_check
+  - checkpoint: final_confirm
+
+- story: inform electricity 2.2
+  steps:
+  - checkpoint: final_confirm
+  - intent: confirm
+  - action: action_final
+
+- story: inform electro 2.1.2 (second try)
+  steps:
+  - checkpoint: final_confirm
+  - intent: inform_number
+  - action: action_pre_check
+  - intent: confirm
+  - action: action_final
+
+
+  
